@@ -130,6 +130,7 @@ void MotorTask::run() {
                     const float derivative_position_width_lower = radians(3);
                     const float derivative_position_width_upper = radians(8);
                     const float raw = derivative_lower_strength + (derivative_upper_strength - derivative_lower_strength)/(derivative_position_width_upper - derivative_position_width_lower)*(config.position_width_radians - derivative_position_width_lower);
+                    // CLAMP is a template function that returns the value clamped to the range [lower, upper]
                     motor.PID_velocity.D = CLAMP(
                         raw,
                         min(derivative_lower_strength, derivative_upper_strength),
@@ -142,7 +143,7 @@ void MotorTask::run() {
                     float strength = command.data.haptic.press ? 5 : 1.5;
                     motor.move(strength);
                     for (uint8_t i = 0; i < 3; i++) {
-                        motor.loopFOC();
+                        motor.loopFOC();  // what is this for?
                         delay(1);
                     }
                     motor.move(-strength);
