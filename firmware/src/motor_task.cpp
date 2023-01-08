@@ -186,6 +186,7 @@ void MotorTask::run() {
             config.position++;
         }
 
+        // What's the dead zone?
         float dead_zone_adjustment = CLAMP(
             angle_to_detent_center,
             fmaxf(-config.position_width_radians*DEAD_ZONE_DETENT_PERCENT, -DEAD_ZONE_RAD),
